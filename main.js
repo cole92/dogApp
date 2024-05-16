@@ -23,8 +23,14 @@ const updateUI = (data) => {
     const dogImages = document.getElementById('dogImages');
     const image = document.createElement('img');
     image.src = data.message;
+    image.alt = "A random dog image";
     dogImages.textContent = '';
-   dogImages.appendChild(image);
+// Cuvanje slika u local storage
+    let storedImages = JSON.parse(localStorage.getItem('dogImages')) || [];
+    storedImages.push(data.message);
+    localStorage.setItem('dogImages', JSON.stringify(storedImages));
+    console.log(localStorage.getItem('dogImages'));
+    dogImages.appendChild(image);
 };
 // Funkcija za obradu i prikaz greske
 const handleError = error => {
@@ -38,3 +44,7 @@ const initApp = () => {
 };
 
 initApp();
+// Funkcija za otvaranje nove strane
+document.getElementById('gallery').addEventListener('click', () => {
+    window.location.href = 'gallery/gallery.html';
+})

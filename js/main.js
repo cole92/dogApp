@@ -1,9 +1,8 @@
-import { eListeners } from './events.js';
-import { loadImagesFromStorage } from './ui.js';
+import { setupMainListeners } from './events.js';
 
+// Pokretanje aplikacije
 const initApp = () => {
-    eListeners();
-    loadImagesFromStorage();  // Učitaj slike iz localStorage
+    setupMainListeners();
 };
 
 initApp();

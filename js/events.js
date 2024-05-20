@@ -1,10 +1,15 @@
 import { fetchAndDisplayImg } from './api.js';
 
-    // eListener na dogBtn
-export const eListeners = () => {
+// Listeneri za glavnu stranicu
+export const setupMainListeners = () => {
     document.getElementById('getDogBtn').addEventListener('click', fetchAndDisplayImg);
-    // eListener za otvaranje nove strane
     document.getElementById('gallery').addEventListener('click', () => {
         window.location.href = 'gallery/gallery.html';
+    });
+};
+// Listener za galeriju 
+export const setupGalleryListeners = () => {
+    document.getElementById('backBtn').addEventListener('click', () => {
+        window.location.href = '../index.html';
     });
 };

@@ -12,7 +12,7 @@ export const fetchAndDisplayImg = () => {
     })
     .catch(handleError)
 };
-
+// Funkcija za snimanje slika u localStorage
 export const saveImageToLocalStorage = (url) => {
     let storedImages = JSON.parse(localStorage.getItem('dogImages')) || [];
     storedImages.push(url);

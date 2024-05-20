@@ -1,19 +1,17 @@
 // Funkcija za obradu odgovora
 export const handleResponse = (response) => {
     if (!response.ok) {
-        throw new Error (`Api call failed with status: ${response.status} and status text ${response.statusText}`);
+        throw new Error(`Api call failed with status: ${response.status} and status text ${response.statusText}`);
     }
     return response.json();
 };
-
-// Funkcija za obradu i prikaz greske
-export const handleError = error => {
+// Obrada greske
+export const handleError = (error) => {
     console.log(`Error while getting data`, error);
     document.getElementById('dogImages').textContent = '';
-    document.getElementById('dogImages').textContent = `Failed to fetch quote, please try again later.`;
+    document.getElementById('dogImages').textContent = `Failed to fetch image, please try again later.`;
 };
-
-// Funkcija za prikaz podataka
+// Azuriranje userInterfac-a
 export const updateUI = (data) => {
     const dogImages = document.getElementById('dogImages');
     const image = document.createElement('img');
@@ -22,15 +20,34 @@ export const updateUI = (data) => {
     dogImages.textContent = '';
     dogImages.appendChild(image);
 };
-
-export const loadImagesFromStorage = () => {
-    const dogImages = document.getElementById('dogImages');
+// Prikaz slika u galeiriji iz localStorage
+export const loadGalleryImages = () => {
+    const galleryGrid = document.getElementById('galleryGrid');
     const storedImages = JSON.parse(localStorage.getItem('dogImages')) || [];
 
-    storedImages.forEach(url => {
+    storedImages.forEach((url, index) => {
+        const imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+
         const image = document.createElement('img');
         image.src = url;
-        image.alt = "A saved dog image"; // Dodajemo alt atribut za pristupačnost
-        dogImages.appendChild(image);
+        image.alt = "A saved dog image";
+        // Delete button
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.addEventListener('click', () => {
+            deleteImage(index);
+        });
+
+        imageContainer.appendChild(image);
+        imageContainer.appendChild(deleteBtn);
+        galleryGrid.appendChild(imageContainer);
     });
+};
+// Funkcija za brisanje slika
+export const deleteImage = (index) => {
+    let storedImages = JSON.parse(localStorage.getItem('dogImages')) || [];
+    storedImages.splice(index, 1);
+    localStorage.setItem('dogImages', JSON.stringify(storedImages));
+    window.location.reload();
 };

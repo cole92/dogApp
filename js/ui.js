@@ -35,12 +35,21 @@ export const loadGalleryImages = () => {
         // Delete button
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'Delete';
+        deleteBtn.classList.add('delete-btn');
         deleteBtn.addEventListener('click', () => {
             deleteImage(index);
+        });
+        // Dugme za deljenje
+        const shareBtn = document.createElement('button');
+        shareBtn.textContent = 'Share';
+        shareBtn.classList.add('share-btn');
+        shareBtn.addEventListener('click', () => {
+            shareImage(url);
         });
 
         imageContainer.appendChild(image);
         imageContainer.appendChild(deleteBtn);
+        imageContainer.appendChild(shareBtn);
         galleryGrid.appendChild(imageContainer);
     });
 };
@@ -50,4 +59,19 @@ export const deleteImage = (index) => {
     storedImages.splice(index, 1);
     localStorage.setItem('dogImages', JSON.stringify(storedImages));
     window.location.reload();
+};
+// Funkcija za deljenje slika(webShareApi)
+export const shareImage = (url) => {
+        // Provera da li broswer podrzava webShareAPi
+    if (navigator.share) {
+        navigator.share({
+            title: 'Dog Image', 
+            text: 'Check out this cute dog!', 
+            url: url
+        })
+        .then(() => console.log('Successful share'))
+        .catch((error) => console.log('Error sharing', error));
+    } else {
+        alert('Web Share API is not supported in your browser.');
+    }
 };

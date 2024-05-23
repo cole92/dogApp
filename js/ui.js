@@ -19,6 +19,7 @@ export const updateUI = (data) => {
     image.alt = "A random dog image";
     dogImages.textContent = '';
     dogImages.appendChild(image);
+    dogImages.classList.add('show');
 };
 // Prikaz slika u galeiriji iz localStorage
 export const loadGalleryImages = () => {
